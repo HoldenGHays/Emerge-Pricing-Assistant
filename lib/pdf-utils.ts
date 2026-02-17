@@ -727,7 +727,7 @@ export async function generateSaaSPricingPDF(
 
 /**
  * Generates a Pro-only pricing PDF from template (no Core field; template has Core removed).
- * Used for "ProcureOS Pro Pricing Only" sales flow.
+ * Used for "ProcureOS Pro Pricing Only" sales flow. Supports monthly and yearly cadence.
  * @param {string} templatePath - Path to the Pro-only template PDF
  * @param {number} proSaaSFee - The pro SaaS fee (monthly)
  * @param {string} cadence - "month" or "year"
