@@ -970,7 +970,8 @@ export default function ProcureOSPricingTool() {
         console.log('✅ Combined pricing PDF generated')
         } else if (pricingSheetType === "proOnly") {
         console.log('Generating ProcureOS Pro Pricing Only PDF...')
-        const proOnlyTemplatePath = billingCadence === "year"
+        const proOnlyTemplatePath =
+          billingCadence === "year"
           ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_only.pdf"
           : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_only.pdf"
         let proSaaSFee: number
