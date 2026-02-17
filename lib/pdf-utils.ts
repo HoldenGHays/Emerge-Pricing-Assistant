@@ -745,26 +745,39 @@ export async function generateProOnlyPricingPDF(
     const pdfDoc = await PDFDocument.load(templateBytes)
     const form = pdfDoc.getForm()
 
+    const fields = form.getFields()
+    console.log('Pro-only template form fields:', fields.map((f) => f.getName()))
+
     const roundDownToNearest99 = (price: number): number => Math.floor(price / 100) * 100 - 1
 
+    // Always compute original full yearly cost when yearly (required for yearly PDF)
     let proOriginalYearly = 0
     let proDiscountedYearly = 0
     if (cadence === "year" && proSaaSFee !== -1) {
       proOriginalYearly = proSaaSFee * 12
       proDiscountedYearly = roundDownToNearest99(proOriginalYearly * 0.875)
     }
+    const originalFullCostText = proSaaSFee === -1 ? 'Custom' : `$${Math.round(proOriginalYearly).toLocaleString()}/year`
 
     if (cadence === "year") {
-      try {
-        const proFeeOriginalField = form.getTextField('proSaaS.feeOriginal')
-        if (proFeeOriginalField) {
-          proFeeOriginalField.setText(proSaaSFee === -1 ? 'Custom' : `$${Math.round(proOriginalYearly).toLocaleString()}/year`)
-          proFeeOriginalField.enableReadOnly()
-          proFeeOriginalField.disableMultiline()
+      const trySetFeeOriginal = (fieldName: string): boolean => {
+        try {
+          const field = form.getTextField(fieldName)
+          if (field) {
+            field.setText(originalFullCostText)
+            field.enableReadOnly()
+            field.disableMultiline()
+            console.log('Set Pro-only feeOriginal:', fieldName, originalFullCostText)
+            return true
+          }
+        } catch {
+          // field not found
         }
-      } catch {
-        // optional field
+        return false
       }
+      trySetFeeOriginal('proSaaS.feeOriginal') ||
+        trySetFeeOriginal('proSaaS.fee_original') ||
+        trySetFeeOriginal('Pro SaaS.feeOriginal')
     }
 
     try {
