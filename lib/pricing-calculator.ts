@@ -60,14 +60,41 @@ export function calculatePricing(annualSpend: number) {
   }
 
   const isCustomPricing = tier.coreSaaS.fee === -1;
-  
+
+  // Credit cap helpers
+  const roundDownToNearest99 = (price: number): number =>
+    Math.floor(price / 100) * 100 - 1;
+
+  // Monthly credit: 2.5% of annual spend / 12, capped at core fee
+  // Annual credit: 2.5% of annual spend, capped at discounted annual core fee
+  const creditTargetPercentage = tier.coreMarketplace.targetPercentage; // e.g. 2.5
+  const grossCreditMonthly = creditTargetPercentage > 0
+    ? Math.round((annualSpend * (creditTargetPercentage / 100)) / 12)
+    : 0;
+  const grossCreditAnnual = creditTargetPercentage > 0
+    ? Math.round(annualSpend * (creditTargetPercentage / 100))
+    : 0;
+
+  const coreFeeMonthly = isCustomPricing ? null : tier.coreSaaS.fee;
+  const coreFeeAnnual = isCustomPricing ? null : roundDownToNearest99(tier.coreSaaS.fee * 12 * 0.875);
+
+  const creditCapMonthly = coreFeeMonthly;
+  const creditCapAnnual = coreFeeAnnual;
+
+  const effectiveCreditMonthly = coreFeeMonthly !== null
+    ? Math.min(grossCreditMonthly, coreFeeMonthly)
+    : null;
+  const effectiveCreditAnnual = coreFeeAnnual !== null
+    ? Math.min(grossCreditAnnual, coreFeeAnnual)
+    : null;
+
   return {
     tier,
     isCustomPricing,
     pricing: {
       marketplace: {
         core: {
-          price: 0, // Always free
+          price: 0, // Always free when commitment is met
           target: tier.coreMarketplace.target,
           targetPercentage: tier.coreMarketplace.targetPercentage,
           description: `Free (requires ${formatShortenedCurrency(tier.coreMarketplace.target)} through marketplace)`
@@ -90,6 +117,23 @@ export function calculatePricing(annualSpend: number) {
           price: isCustomPricing ? "Custom" : tier.proSaaS.fee,
           description: isCustomPricing ? "Custom pricing" : `$${tier.proSaaS.fee}/month`
         }
+      },
+      credit: {
+        // Percentage of annual spend that becomes marketplace credit
+        targetPercentage: creditTargetPercentage,
+        // Raw credit potential before cap (monthly / annual)
+        grossMonthly: grossCreditMonthly,
+        grossAnnual: grossCreditAnnual,
+        // Cap = core platform fee only (Pro excluded)
+        capMonthly: creditCapMonthly,   // null if custom pricing
+        capAnnual: creditCapAnnual,     // null if custom pricing
+        // Effective credit after cap applied
+        effectiveMonthly: effectiveCreditMonthly,
+        effectiveAnnual: effectiveCreditAnnual,
+        // Whether credit fully covers the core fee
+        coversCoreFully: effectiveCreditMonthly !== null && coreFeeMonthly !== null
+          ? effectiveCreditMonthly >= coreFeeMonthly
+          : false,
       }
     }
   };

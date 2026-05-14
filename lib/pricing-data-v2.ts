@@ -9,12 +9,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 250000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 6250,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 6250,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -27,12 +27,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 500000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 12500,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 12500,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -45,12 +45,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 1000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 25000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 25000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -63,12 +63,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 2000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 50000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 50000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -81,12 +81,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 3000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 75000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 75000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -99,12 +99,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 4000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 100000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 100000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -117,12 +117,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 5000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 125000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 125000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -135,12 +135,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 6000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 150000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 150000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -153,12 +153,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 7000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 175000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 175000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -171,12 +171,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 8000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 200000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 200000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {
@@ -189,12 +189,12 @@ export const pricingDataV2: PricingTier[] = [
   {
     annual_freight_spend: 9000000,
     coreMarketplace: {
-      target: 0,
-      targetPercentage: 0
+      target: 225000,
+      targetPercentage: 2.5
     },
     proMarketplace: {
-      target: 0,
-      targetPercentage: 0,
+      target: 225000,
+      targetPercentage: 2.5,
       saasAddOnFee: 0
     },
     coreSaaS: {

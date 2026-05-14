@@ -1001,24 +1001,43 @@ export function MasterControls({
                       Req. ${pricingInfo.marketplace.core.target.toLocaleString()}
                     </div>
                   )}
+                  {/* Credit cap display */}
+                  {pricingSheetType !== "proOnly" && pricingInfo.credit && pricingInfo.credit.targetPercentage > 0 && (
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">
+                      {pricingInfo.credit.capMonthly !== null
+                        ? billingCadence === "year"
+                          ? `Credit up to $${pricingInfo.credit.capAnnual?.toLocaleString()}/yr`
+                          : `Credit up to $${pricingInfo.credit.capMonthly?.toLocaleString()}/mo`
+                        : "Credit up to custom cap"}
+                      {" "}({pricingInfo.credit.targetPercentage}% of spend)
+                    </div>
+                  )}
                 </div>
                 <div className="p-2 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600">
                   <div className="text-gray-500 dark:text-gray-400 text-xs">Pro Add-on</div>
-                  <div className="font-semibold text-gray-900 dark:text-gray-100">
-                    {typeof pricingInfo.marketplace.pro.price === 'number' 
-                      ? (() => {
-                          if (billingCadence === "year") {
-                            const discounted = pricingInfo.marketplace.pro.price * 12 * 0.875
-                            const rounded = Math.floor(discounted / 100) * 100 - 1 // Round down to nearest 99
-                            return `$${rounded.toLocaleString()}/yr`
-                          }
-                          return `$${pricingInfo.marketplace.pro.price.toLocaleString()}/mo`
-                        })()
-                      : pricingInfo.marketplace.pro.price}
-                  </div>
-                  <div className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">
-                    Req. ${pricingInfo.marketplace.pro.target.toLocaleString()}
-                  </div>
+                  {typeof pricingInfo.marketplace.pro.price === 'number' && pricingInfo.marketplace.pro.price === 0
+                    ? (
+                      <div className="font-semibold text-gray-400 dark:text-gray-500">N/A</div>
+                    ) : (
+                      <>
+                        <div className="font-semibold text-gray-900 dark:text-gray-100">
+                          {typeof pricingInfo.marketplace.pro.price === 'number'
+                            ? (() => {
+                                if (billingCadence === "year") {
+                                  const discounted = pricingInfo.marketplace.pro.price * 12 * 0.875
+                                  const rounded = Math.floor(discounted / 100) * 100 - 1
+                                  return `$${rounded.toLocaleString()}/yr`
+                                }
+                                return `$${pricingInfo.marketplace.pro.price.toLocaleString()}/mo`
+                              })()
+                            : pricingInfo.marketplace.pro.price}
+                        </div>
+                        <div className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">
+                          Req. ${pricingInfo.marketplace.pro.target.toLocaleString()}
+                        </div>
+                      </>
+                    )
+                  }
                 </div>
               </div>
             </div>
