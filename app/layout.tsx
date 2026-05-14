@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
+import { Inter } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 import { AppSwitcher } from '@/components/app-switcher'
 import { ThemeProvider } from '@/components/theme-provider'
 import { HeaderProvider } from '@/components/header-context'
@@ -38,16 +40,14 @@ export default function RootLayout({
       <head>
         <style>{`
 html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
   --font-mono: ${GeistMono.variable};
 }
         `}</style>
       </head>
-      <body className={GeistSans.className}>
+      <body className={`${inter.className} ${inter.variable}`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

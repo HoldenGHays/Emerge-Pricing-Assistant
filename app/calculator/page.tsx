@@ -338,7 +338,7 @@ export default function PricingCalculator() {
                     <div className="border rounded-lg p-4 bg-green-50">
                       <div className="flex justify-between items-center mb-2">
                         <h3 className="font-semibold text-green-800">Core</h3>
-                        <Badge variant="secondary" className="bg-green-100 text-green-800">Free</Badge>
+                        <Badge color="green">Free</Badge>
                       </div>
                       <p className="text-sm text-green-700">
                         {calculationResult.pricing.marketplace.core.description}
@@ -348,7 +348,7 @@ export default function PricingCalculator() {
                     <div className="border rounded-lg p-4">
                       <div className="flex justify-between items-center mb-2">
                         <h3 className="font-semibold">Pro Add-on</h3>
-                        <Badge variant="outline">
+                        <Badge color="blue">
                           {calculationResult.pricing.marketplace.pro.price === "Custom" 
                             ? "Custom" 
                             : `$${calculationResult.pricing.marketplace.pro.price}/month`
@@ -371,7 +371,7 @@ export default function PricingCalculator() {
                     <div className="border rounded-lg p-4">
                       <div className="flex justify-between items-center mb-2">
                         <h3 className="font-semibold">Core</h3>
-                        <Badge variant="outline">
+                        <Badge color="neutral">
                           {calculationResult.pricing.saas.core.price === "Custom" 
                             ? "Custom" 
                             : `$${calculationResult.pricing.saas.core.price}/month`
@@ -386,7 +386,7 @@ export default function PricingCalculator() {
                     <div className="border rounded-lg p-4">
                       <div className="flex justify-between items-center mb-2">
                         <h3 className="font-semibold">Pro</h3>
-                        <Badge variant="outline">
+                        <Badge color="blue">
                           {calculationResult.pricing.saas.pro.price === "Custom" 
                             ? "Custom" 
                             : `$${calculationResult.pricing.saas.pro.price}/month`

@@ -2,54 +2,175 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Light mode (default / :root) ── */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  --background: 220 14% 96%;
+  --foreground: 233 100% 4%;
   --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card-foreground: 233 100% 4%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222.2 84% 4.9%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222.2 84% 4.9%;
+  --popover-foreground: 233 100% 4%;
+  --primary: 221 100% 57%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 16% 85%;
+  --secondary-foreground: 233 100% 4%;
+  --muted: 210 14% 90%;
+  --muted-foreground: 210 14% 40%;
+  --accent: 221 100% 57%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
-  --radius: 0.5rem;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 16% 80%;
+  --input: 210 16% 80%;
+  --ring: 221 100% 57%;
+  --radius: 1rem;
+
+  --emerge-lime: #BDFF00;
+  --emerge-orange: #FF5C00;
+  --emerge-grape: #A87FFF;
+  --emerge-blue: #246DFF;
+  --emerge-navy: #00020D;
 }
 
+/* ── Dark mode ── */
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --background: 233 100% 4%;
+  --foreground: 0 0% 100%;
+  --card: 228 60% 8%;
+  --card-foreground: 0 0% 100%;
+  --popover: 228 60% 8%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 221 100% 57%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 16% 22%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 210 14% 19%;
+  --muted-foreground: 215 12% 70%;
+  --accent: 221 100% 57%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
+  --border: 210 16% 29%;
+  --input: 210 16% 29%;
+  --ring: 221 100% 57%;
 }
 
 * {
   @apply border-border;
 }
+
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   @apply bg-background text-foreground;
+  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
+}
+
+@layer components {
+  /* ── LIGHT MODE glass cards ── */
+  .glass-card {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.60)),
+      rgb(174 184 193 / 12%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(76, 89, 103, 0.18);
+    border-radius: 16px;
+  }
+
+  .glass-card-subtle {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)),
+      rgb(174 184 193 / 8%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(76, 89, 103, 0.15);
+    border-radius: 16px;
+  }
+
+  /* 3rd layer — gradient stroke + fill + blur + drop shadow */
+  .glass-card-inner {
+    position: relative;
+    background:
+      linear-gradient(rgb(255 255 255 / 45%), rgb(255 255 255 / 45%)),
+      rgb(174 184 193 / 8%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow:
+      0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+      0px 4px 12px -2px rgba(0, 2, 13, 0.10),
+      0px 12px 32px -4px rgba(0, 2, 13, 0.08);
+  }
+
+  /* Gradient stroke via pseudo-element mask */
+  .glass-card-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.10) 0%,
+      rgba(76, 89, 103, 0.18) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glass-card-inner > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── DARK MODE glass cards ── */
+  .dark .glass-card {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)),
+      rgb(76 89 103 / 0%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(76, 89, 103, 0.35);
+    border-radius: 16px;
+  }
+
+  .dark .glass-card-subtle {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)),
+      rgba(76, 89, 103, 0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(76, 89, 103, 0.25);
+    border-radius: 16px;
+  }
+
+  .dark .glass-card-inner {
+    background:
+      linear-gradient(rgb(255 255 255 / 1%), rgb(255 255 255 / 1%)),
+      rgb(76 89 103 / 0%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow:
+      0px 0px 0px 1px rgba(0, 0, 0, 0.25),
+      0px 4px 12px -2px rgba(0, 2, 13, 0.50),
+      0px 12px 32px -4px rgba(0, 2, 13, 0.40);
+  }
+
+  .dark .glass-card-inner::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(76, 89, 103, 0.22) 100%
+    );
+  }
 }

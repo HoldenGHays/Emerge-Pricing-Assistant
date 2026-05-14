@@ -1,36 +1,39 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 
-const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
+export type BadgeColor = "blue" | "neutral" | "red" | "green" | "yellow" | "purple" | "ghost"
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
-
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  )
+const borderStyles: Record<BadgeColor, string> = {
+  blue:    "border border-[#246DFF]",
+  neutral: "border border-[#AEB8C1]",
+  red:     "border border-[#FF5C00]",
+  green:   "border border-[#BDFF00]",
+  yellow:  "border border-white",
+  purple:  "border border-[#A87FFF]",
+  ghost:   "",
 }
 
-export { Badge, badgeVariants }
+const glassBackground = "linear-gradient(rgba(255,255,255,0.016) 0%, rgba(255,255,255,0.024) 100%), linear-gradient(90deg, rgba(76,89,103,0.15) 0%, rgba(76,89,103,0.15) 100%)"
+
+interface BadgeProps {
+  children: React.ReactNode
+  color?: BadgeColor
+  className?: string
+}
+
+export function Badge({ children, color = "neutral", className }: BadgeProps) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center justify-center px-3 py-1 rounded-full",
+        "text-sm font-normal text-white whitespace-nowrap",
+        "backdrop-blur-[32px]",
+        "shadow-[0px_8px_32px_-8px_#00020d]",
+        borderStyles[color],
+        className
+      )}
+      style={{ background: glassBackground }}
+    >
+      {children}
+    </span>
+  )
+}
