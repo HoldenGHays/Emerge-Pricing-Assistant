@@ -729,12 +729,14 @@ export async function generateSaaSPricingPDF(
  * Generates a Pro-only pricing PDF from template (no Core field; template has Core removed).
  * Used for "ProcureOS Pro Pricing Only" sales flow. Supports monthly and yearly cadence.
  * @param {string} templatePath - Path to the Pro-only template PDF
+ * @param {number} coreSaaSFee - The core SaaS fee (monthly)
  * @param {number} proSaaSFee - The pro SaaS fee (monthly)
  * @param {string} cadence - "month" or "year"
  * @returns {Promise<Blob>} - Generated PDF as a Blob
  */
 export async function generateProOnlyPricingPDF(
   templatePath: string,
+  coreSaaSFee: number,
   proSaaSFee: number,
   cadence: "month" | "year" = "month"
 ): Promise<Blob> {
@@ -780,6 +782,29 @@ export async function generateProOnlyPricingPDF(
         trySetFeeOriginal('Pro SaaS.feeOriginal')
     }
 
+    // coreSaaS.fee
+    try {
+      const coreFeeField = form.getTextField('coreSaaS.fee')
+      if (coreFeeField) {
+        let coreDiscountedYearly = 0
+        if (cadence === "year" && coreSaaSFee !== -1) {
+          coreDiscountedYearly = (Math.floor((coreSaaSFee * 12 * 0.875) / 100) * 100) - 1
+        }
+        const coreFeeText = coreSaaSFee === -1
+          ? 'Custom'
+          : cadence === "year"
+            ? `$${coreDiscountedYearly.toLocaleString()}/year`
+            : `$${coreSaaSFee.toLocaleString()}/month`
+        coreFeeField.setText(coreFeeText)
+        coreFeeField.enableReadOnly()
+        coreFeeField.disableMultiline()
+        console.log('✅ Filled coreSaaS.fee in Pro-only template:', coreFeeText)
+      }
+    } catch (error) {
+      console.log('Could not find coreSaaS.fee field in Pro-only template:', error)
+    }
+
+    // proSaaS.fee
     try {
       const proFeeField = form.getTextField('proSaaS.fee')
       if (proFeeField) {

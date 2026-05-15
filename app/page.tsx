@@ -974,6 +974,13 @@ export default function ProcureOSPricingTool() {
           billingCadence === "year"
             ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_Only.pdf"
             : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_only.pdf"
+        let coreSaaSFee: number
+        if (pricingResult.pricing.saas.core.price === "Custom") {
+          const customValue = customPricing.saasCore ? Number(customPricing.saasCore) : -1
+          coreSaaSFee = billingCadence === "year" && customValue !== -1 ? customValue / 12 : customValue
+        } else {
+          coreSaaSFee = pricingResult.pricing.saas.core.price as number
+        }
         let proSaaSFee: number
         if (pricingResult.pricing.saas.pro.price === "Custom") {
           const customValue = customPricing.saasPro ? Number(customPricing.saasPro) : -1
@@ -981,7 +988,7 @@ export default function ProcureOSPricingTool() {
         } else {
           proSaaSFee = pricingResult.pricing.saas.pro.price as number
         }
-        const proOnlyPdf = await generateProOnlyPricingPDF(proOnlyTemplatePath, proSaaSFee, billingCadence)
+        const proOnlyPdf = await generateProOnlyPricingPDF(proOnlyTemplatePath, coreSaaSFee, proSaaSFee, billingCadence)
         const proOnlyUrl = URL.createObjectURL(proOnlyPdf)
         generatedPdfs.push(proOnlyUrl)
         console.log('✅ ProcureOS Pro Pricing Only PDF generated')
