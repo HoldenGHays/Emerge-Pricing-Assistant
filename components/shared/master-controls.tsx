@@ -79,6 +79,8 @@ interface MasterControlsProps {
   setPricingSheetType: (value: "marketplace" | "saas" | "both" | "combined" | "proOnly") => void
   billingCadence: "month" | "year"
   setBillingCadence: (value: "month" | "year") => void
+  productsIncluded: "all" | "rfp" | "spot"
+  setProductsIncluded: (value: "all" | "rfp" | "spot") => void
   isMarketplacePricingAvailable?: boolean
   
   // Custom pricing state
@@ -187,6 +189,8 @@ export function MasterControls({
   setPricingSheetType,
   billingCadence,
   setBillingCadence,
+  productsIncluded,
+  setProductsIncluded,
   isMarketplacePricingAvailable = true,
   
   // Custom pricing state
@@ -503,6 +507,57 @@ export function MasterControls({
                       </div>
                     </div>
                   </div>
+
+                    {/* Products Included Selector */}
+                    <div className="space-y-2 mt-3 pt-3 border-t border-border">
+                      <Label className="text-xs font-medium text-foreground block mb-2">
+                        Products Included
+                      </Label>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            id={`products-included-all-docs-${variant}`}
+                            name={`products-included-docs-${variant}`}
+                            value="all"
+                            checked={productsIncluded === "all"}
+                            onChange={(e) => setProductsIncluded(e.target.value as "all" | "rfp" | "spot")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <Label htmlFor={`products-included-all-docs-${variant}`} className="text-foreground text-sm cursor-pointer">
+                            All
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            id={`products-included-rfp-docs-${variant}`}
+                            name={`products-included-docs-${variant}`}
+                            value="rfp"
+                            checked={productsIncluded === "rfp"}
+                            onChange={(e) => setProductsIncluded(e.target.value as "all" | "rfp" | "spot")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <Label htmlFor={`products-included-rfp-docs-${variant}`} className="text-foreground text-sm cursor-pointer">
+                            RFP
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            id={`products-included-spot-docs-${variant}`}
+                            name={`products-included-docs-${variant}`}
+                            value="spot"
+                            checked={productsIncluded === "spot"}
+                            onChange={(e) => setProductsIncluded(e.target.value as "all" | "rfp" | "spot")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <Label htmlFor={`products-included-spot-docs-${variant}`} className="text-foreground text-sm cursor-pointer">
+                            Spot
+                          </Label>
+                        </div>
+                      </div>
+                    </div>
                 </div>
               )}
             </div>
@@ -950,6 +1005,57 @@ export function MasterControls({
                           />
                           <Label htmlFor={`billing-cadence-year-${variant}`} className="text-foreground text-sm cursor-pointer">
                             Yearly
+                          </Label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Products Included Selector */}
+                    <div className="space-y-2 mt-3 pt-3 border-t border-border">
+                      <Label className="text-xs font-medium text-foreground block mb-2">
+                        Products Included
+                      </Label>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            id={`products-included-all-${variant}`}
+                            name={`products-included-${variant}`}
+                            value="all"
+                            checked={productsIncluded === "all"}
+                            onChange={(e) => setProductsIncluded(e.target.value as "all" | "rfp" | "spot")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <Label htmlFor={`products-included-all-${variant}`} className="text-foreground text-sm cursor-pointer">
+                            All
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            id={`products-included-rfp-${variant}`}
+                            name={`products-included-${variant}`}
+                            value="rfp"
+                            checked={productsIncluded === "rfp"}
+                            onChange={(e) => setProductsIncluded(e.target.value as "all" | "rfp" | "spot")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <Label htmlFor={`products-included-rfp-${variant}`} className="text-foreground text-sm cursor-pointer">
+                            RFP
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="radio"
+                            id={`products-included-spot-${variant}`}
+                            name={`products-included-${variant}`}
+                            value="spot"
+                            checked={productsIncluded === "spot"}
+                            onChange={(e) => setProductsIncluded(e.target.value as "all" | "rfp" | "spot")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                          />
+                          <Label htmlFor={`products-included-spot-${variant}`} className="text-foreground text-sm cursor-pointer">
+                            Spot
                           </Label>
                         </div>
                       </div>

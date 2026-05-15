@@ -73,6 +73,7 @@ export default function ProcureOSPricingTool() {
   const [includePricingSheet, setIncludePricingSheet] = useState(true)
   const [pricingSheetType, setPricingSheetType] = useState<"marketplace" | "saas" | "both" | "combined" | "proOnly">("marketplace")
   const [billingCadence, setBillingCadence] = useState<"month" | "year">("month")
+  const [productsIncluded, setProductsIncluded] = useState<"all" | "rfp" | "spot">("all")
 
   // Custom pricing state
   const [customPricing, setCustomPricing] = useState({
@@ -666,6 +667,13 @@ export default function ProcureOSPricingTool() {
     }
   }
 
+  // Returns the filename suffix for the selected products variant
+  const getProductsSuffix = () => {
+    if (productsIncluded === "rfp") return "_RFP"
+    if (productsIncluded === "spot") return "_Spot"
+    return ""
+  }
+
   // New function to generate dynamic pricing PDFs based on calculated pricing
   const generateDynamicPricingPDFs = async (spendValue: number) => {
     try {
@@ -729,8 +737,8 @@ export default function ProcureOSPricingTool() {
         
         // Always use the standard pricing sheet (includes 2.5% marketplace credit for all shippers)
         const saasTemplatePath = billingCadence === "year"
-          ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-          : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+          ? `/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
+          : `/templates/Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
         // Pass monthly prices - PDF function will calculate yearly with discount
         let coreSaaSFee: number
         let proSaaSFee: number
@@ -769,8 +777,8 @@ export default function ProcureOSPricingTool() {
           console.log('❌ Marketplace pricing not available for this spend level, generating SaaS only')
           // Use standard pricing sheet (includes 2.5% marketplace credit for all shippers)
           const saasTemplatePath = billingCadence === "year"
-            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-            : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+            ? `/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
+            : `/templates/Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
           let coreSaaSFee: number
           let proSaaSFee: number
           
@@ -837,8 +845,8 @@ export default function ProcureOSPricingTool() {
         
         // Generate SaaS pricing PDF
         const saasTemplatePath = billingCadence === "year"
-          ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-          : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+          ? `/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
+          : `/templates/Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
         // Pass monthly prices - PDF function will calculate yearly with discount
         let coreSaaSFee: number
         let proSaaSFee: number
@@ -877,8 +885,8 @@ export default function ProcureOSPricingTool() {
           console.log('❌ Marketplace pricing not available for this spend level, generating SaaS only')
           // Use standard pricing sheet (includes 2.5% marketplace credit for all shippers)
           const saasTemplatePath = billingCadence === "year"
-            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-            : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+            ? `/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
+            : `/templates/Pricing Tool_Generic Pricing Sheet (v0.1)${getProductsSuffix()}.pdf`
           let coreSaaSFee: number
           let proSaaSFee: number
           
@@ -968,8 +976,8 @@ export default function ProcureOSPricingTool() {
         console.log('Generating ProcureOS Pro Pricing Only PDF...')
         const proOnlyTemplatePath =
           billingCadence === "year"
-            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_Only.pdf"
-            : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_only.pdf"
+            ? `/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_Only${getProductsSuffix()}.pdf`
+            : `/templates/Pricing Tool_Generic Pricing Sheet (v0.1)_Pro_only${getProductsSuffix()}.pdf`
         let coreSaaSFee: number
         if (pricingResult.pricing.saas.core.price === "Custom") {
           const customValue = customPricing.saasCore ? Number(customPricing.saasCore) : -1
@@ -1148,6 +1156,8 @@ export default function ProcureOSPricingTool() {
               setPricingSheetType={setPricingSheetType}
               billingCadence={billingCadence}
               setBillingCadence={setBillingCadence}
+              productsIncluded={productsIncluded}
+              setProductsIncluded={setProductsIncluded}
               isMarketplacePricingAvailable={isMarketplacePricingAvailable()}
               
               // Custom pricing state
@@ -1497,6 +1507,8 @@ export default function ProcureOSPricingTool() {
                 setPricingSheetType={setPricingSheetType}
                 billingCadence={billingCadence}
                 setBillingCadence={setBillingCadence}
+                productsIncluded={productsIncluded}
+                setProductsIncluded={setProductsIncluded}
                 isMarketplacePricingAvailable={isMarketplacePricingAvailable()}
                 
                 // Custom pricing state
