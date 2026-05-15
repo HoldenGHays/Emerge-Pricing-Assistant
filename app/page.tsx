@@ -727,10 +727,14 @@ export default function ProcureOSPricingTool() {
         } else if (pricingSheetType === "saas") {
         console.log('Generating SaaS pricing PDF...')
         
-        // Always use the standard pricing sheet (includes 2.5% marketplace credit for all shippers)
-        const saasTemplatePath = billingCadence === "year"
-          ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-          : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+        // Use SaaS-only template when marketplace pricing is not available
+        const saasTemplatePath = !isMarketplacePricingAvailable() 
+          ? (billingCadence === "year"
+              ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet SaaS Only (v0.1).pdf"
+              : "/templates/Pricing Tool_Generic Pricing Sheet SaaS Only (v0.1).pdf")
+          : (billingCadence === "year"
+              ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+              : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf")
         // Pass monthly prices - PDF function will calculate yearly with discount
         let coreSaaSFee: number
         let proSaaSFee: number
@@ -767,10 +771,10 @@ export default function ProcureOSPricingTool() {
         // Check if marketplace pricing is available
         if (!isMarketplacePricingAvailable()) {
           console.log('❌ Marketplace pricing not available for this spend level, generating SaaS only')
-          // Use standard pricing sheet (includes 2.5% marketplace credit for all shippers)
+          // Fall back to SaaS only - use SaaS-only template since marketplace is not available
           const saasTemplatePath = billingCadence === "year"
-            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-            : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet SaaS Only (v0.1).pdf"
+            : "/templates/Pricing Tool_Generic Pricing Sheet SaaS Only (v0.1).pdf"
           let coreSaaSFee: number
           let proSaaSFee: number
           
@@ -875,10 +879,10 @@ export default function ProcureOSPricingTool() {
         // Check if marketplace pricing is available
         if (!isMarketplacePricingAvailable()) {
           console.log('❌ Marketplace pricing not available for this spend level, generating SaaS only')
-          // Use standard pricing sheet (includes 2.5% marketplace credit for all shippers)
+          // Fall back to SaaS only - use SaaS-only template since marketplace is not available
           const saasTemplatePath = billingCadence === "year"
-            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
-            : "/templates/Pricing Tool_Generic Pricing Sheet (v0.1).pdf"
+            ? "/yearly templates/Yearly Pricing Tool_Generic Pricing Sheet SaaS Only (v0.1).pdf"
+            : "/templates/Pricing Tool_Generic Pricing Sheet SaaS Only (v0.1).pdf"
           let coreSaaSFee: number
           let proSaaSFee: number
           
